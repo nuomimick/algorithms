@@ -1,72 +1,72 @@
-//package learning;
-//import java.lang.Math;
-//
-//class Point{
-//	double x;
-//	double y;
-//	public Point(double x,double y){
-//		this.x = x;
-//		this.y = y;
-//	}
-//}
-////Simulated AnnealingÄ£ÄâÍË»ğËã·¨
-////·ÑÂíµãÎÊÌâÇó½â£¨¸øn¸öµã£¬ÕÒ³öÒ»¸öµã£¬Ê¹Õâ¸öµãµ½ÆäËûËùÓĞµãµÄ¾àÀë×îĞ¡£©
-//public class SA_1 {
-//	double tMin = 1;
-//	
-//	public double dist(Point a,Point b){
-//		return Math.sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
-//	}
-//	
-//	public double getSum(Point[] pl,Point p){
-//		int len = pl.length;
-//		double sumDist = 0;
-//		for(int i=0;i<len;i++){
-//			sumDist += dist(pl[i], p);
-//		}
-//		return sumDist;
-//	}
-//	
-//	public Point search(Point[] pl,double t){
-//		Point bestPoint = null;
-//		int count = 0;
-//		double minDist = 0xFFFF;
-//		while(t > tMin){
-//			for(int i=0;i<pl.length;i++){
-//				double dist = getSum(pl,pl[i]);
-//				double dt = dist - minDist;
-//				if(dt < 0){
-//					count = 0;
-//					bestPoint = pl[i];
-//					minDist = dist;
-//				}else{
-//					if(Math.exp(-dt/t) > Math.random()){
-//						count = 0;
-//						bestPoint = pl[i];
-//						minDist = dist;
-//					}else{
-//						count++;
-//					}
-//				}
-//			}
-//			if(count > 3){
-//				break;
-//			}
-//			t *= 0.9;
-//		}
-//		return bestPoint;
-//	}
-//	
-//	public static void main(String[] args) {
-//		Point[] pl = new Point[5];
-//		pl[0] = new Point(1,1);
-//		pl[1] = new Point(0,0);
-//		pl[2] = new Point(1,0);
-//		pl[3] = new Point(0,1);
-//		pl[4] = new Point(0.5,0.5);
-//		SA_1 sa = new SA_1();
-//		Point result = sa.search(pl, 100);
-//		System.out.println(result.x);
-//		System.out.println(result.y);
-//	}
-//}
+package learning;
+import java.lang.Math;
+
+class Point{
+	double x;
+	double y;
+	public Point(double x,double y){
+		this.x = x;
+		this.y = y;
+	}
+}
+//Simulated Annealingæ¨¡æ‹Ÿé€€ç«ç®—æ³•
+//è´¹é©¬ç‚¹é—®é¢˜æ±‚è§£ï¼ˆç»™nä¸ªç‚¹ï¼Œæ‰¾å‡ºä¸€ä¸ªç‚¹ï¼Œä½¿è¿™ä¸ªç‚¹åˆ°å…¶ä»–æ‰€æœ‰ç‚¹çš„è·ç¦»æœ€å°ï¼‰
+public class SA_1 {
+	double tMin = 1;
+	
+	public double dist(Point a,Point b){
+		return Math.sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
+	}
+	
+	public double getSum(Point[] pl,Point p){
+		int len = pl.length;
+		double sumDist = 0;
+		for(int i=0;i<len;i++){
+			sumDist += dist(pl[i], p);
+		}
+		return sumDist;
+	}
+	
+	public Point search(Point[] pl,double t){
+		Point bestPoint = null;
+		int count = 0;
+		double minDist = 0xFFFF;
+		while(t > tMin){
+			for(int i=0;i<pl.length;i++){
+				double dist = getSum(pl,pl[i]);
+				double dt = dist - minDist;
+				if(dt < 0){
+					count = 0;
+					bestPoint = pl[i];
+					minDist = dist;
+				}else{
+					if(Math.exp(-dt/t) > Math.random()){
+						count = 0;
+						bestPoint = pl[i];
+						minDist = dist;
+					}else{
+						count++;
+					}
+				}
+			}
+			if(count > 3){
+				break;
+			}
+			t *= 0.9;
+		}
+		return bestPoint;
+	}
+	
+	public static void main(String[] args) {
+		Point[] pl = new Point[5];
+		pl[0] = new Point(1,1);
+		pl[1] = new Point(0,0);
+		pl[2] = new Point(1,0);
+		pl[3] = new Point(0,1);
+		pl[4] = new Point(0.5,0.5);
+		SA_1 sa = new SA_1();
+		Point result = sa.search(pl, 100);
+		System.out.println(result.x);
+		System.out.println(result.y);
+	}
+}
