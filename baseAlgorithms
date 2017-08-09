@@ -1,0 +1,101 @@
+int* get_next(char* str) {
+	int i = 0, j = 0, len = strlen(str);
+	int *next = new int[len];
+	next[0] = 0;
+	while (i < len - 1) {
+		if (j == 0 || str[i] == str[j - 1]) {
+			++i, ++j;
+			next[i] = j;
+		}
+		else j = next[j - 1];
+	}
+	return next;
+}
+
+int kmp(char* str, char* substr) {
+	int i = 1, j = 1;
+	int *next = get_next(substr);
+	int len = strlen(str), sublen = strlen(substr);
+	while (j <= sublen && i <= len) {
+		if (j == 0 || str[i - 1] == substr[j - 1]) {
+			i++, j++;
+		}
+		else {
+			j = next[j - 1];
+		}
+	}
+	if (j > sublen) return i - sublen - 1;
+	else return 0;
+}
+
+int binarySearch(int arr[], int i, int j, int key) {
+	if (i <= j) {
+		int mid = (i + j) / 2;
+		if (arr[mid] == key)
+			return mid;
+		else if (arr[mid] > key)
+			return binarySearch(arr, i, mid - 1, key);
+		else if (arr[mid] < key)
+			return binarySearch(arr, mid + 1, j, key);
+	}
+	else
+		return -1;
+}
+
+int binarySearchX(int arr[], int n, int key) {
+	int i = 0, j = n - 1;
+	while (i <= j) {
+		int mid = (i + j) / 2;
+		if (arr[mid] == key)
+			return mid;
+		else if (arr[mid] < key) {
+			i = mid + 1;
+		}
+		else if (arr[mid] > key) {
+			j = mid - 1;
+		}
+	}
+	return -1;
+}
+
+char* bigIntMulti(char* num1, char* num2) {
+	int n1 = strlen(num1);
+	int n2 = strlen(num2);
+	char* multi = new char[n1 + n2 + 1];
+	multi[n1 + n2] = '\0';
+	for (int i = 0; i < n1; i++) num1[i] -= '0';
+	for (int i = 0; i < n2; i++) num2[i] -= '0';
+	int carry = 0;
+	int sum;
+	for (int i = n1 + n2 - 1; i >= 0; i--) {
+		sum = carry;
+		int j = i - n1;
+		if (j <= 0) j = 0;
+		for (; (j < n2) && (j < i); j++) {
+			sum += num1[i - j - 1] * num2[j];
+		}
+		multi[i] = sum % 10 + '0';
+		carry = sum / 10;
+	}
+	return multi[0] == '0' ? multi + 1 : multi;
+}
+
+//ListNode* createNodeList(vector<int> arr) {
+//	ListNode* node = NULL;
+//	ListNode* head = NULL;
+//	for (int i = 0; i < arr.size(); i++) {
+//		if (i == 0) {
+//			ListNode* n = (ListNode*)malloc(sizeof(ListNode));
+//			n->val = arr[i];
+//			node = n;
+//			head = node;
+//			continue;
+//		}
+//		ListNode* n = (ListNode*)malloc(sizeof(ListNode));
+//		n->val = arr[i];
+//		node->next = n;
+//		node = node->next;
+//	}
+//	node->next = NULL;
+//	return head;
+//}
